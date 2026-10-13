@@ -12,19 +12,18 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: lab2-blog
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-          cache-dependency-path: lab2-blog/pnpm-lock.yaml
-      - run: pnpm install
-      - run: pnpm build
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: lab2-blog
+      - name: Build
+        run: pnpm build
+        working-directory: lab2-blog
       - uses: actions/upload-pages-artifact@v3
         with:
           path: lab2-blog/dist
