@@ -14,16 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Setup pnpm
+        run: npm install -g pnpm
       - name: Install dependencies
+        working-directory: lab2-blog
         run: pnpm install
-        working-directory: lab2-blog
       - name: Build
-        run: pnpm build
         working-directory: lab2-blog
+        run: pnpm build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: lab2-blog/dist
